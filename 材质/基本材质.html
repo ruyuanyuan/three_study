@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基本材质</title>
+  <script src="../three.js"></script>
+</head>
+<body>
+  <h3>基本材质</h3>
+  <h5>THREE.MeshBasicMaterial(opt)</h5>
+  <pre>
+    基本材质（BasicMaterial）的物体，渲染后物体的颜色始终为该材质的颜色，
+    而不会由于光照产生明暗、阴影效果。如果没有指定材质的颜色，则颜色是随机的
+  </pre>
+  <pre>
+    visible：是否可见，默认为true
+    side：渲染面片正面或是反面，默认为正面THREE.FrontSide，可设置为反面THREE.BackSide，或双面THREE.DoubleSide
+    wireframe：是否渲染线而非面，默认为false
+    color：十六进制RGB颜色，如红色表示为0xff0000
+    map：使用纹理贴图
+
+    对于基本材质，即使改变场景中的光源，使用该材质的物体也始终为颜色处处相同的效果。
+  </pre>
+
+  <canvas id="mainCanvas" width="400px" height="300px" ></canvas>
+</body>
+</html>
+<script>
+function init() {
+    // 渲染器（Renderer）
+    // 渲染器将和Canvas元素进行绑定
+    var renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('mainCanvas')
+    })
+    // 设置为渲染器背景黑色
+    renderer.setClearColor(0x000000);
+
+    //场景（Scene）
+    var scene = new THREE.Scene();
+
+    // 照相机（Camera）
+    var camera = new THREE.PerspectiveCamera(45, 400 / 300, 1, 10)
+    camera.position.set(4, 2.5, 4);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
+
+    // 创建长方体
+    var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 2, 3, 1, 3, 3),
+        new THREE.MeshBasicMaterial({
+            color: 0xffff00,
+            opacity: 0.75,
+            wireframe:false
+        })
+    );
+    scene.add(cube);
+
+    //渲染
+    renderer.render(scene, camera);
+  }
+  init()
+
+</script>

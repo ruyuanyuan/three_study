@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>几何形状概念</title>
+</head>
+<body>
+  <h3>几何形状</h3>
+  <pre>
+    在创建物体时，需要传入两个参数，一个是几何形状（Geometry），另一个是材质（Material）
+
+    几何形状（Geometry）最主要的功能是储存了一个物体的顶点信息
+  </pre>
+  <h4>1.基本几何形状</h4>
+  <h5>立方体（ CubeGeometry ） </h5>
+  <h6>THREE.CubeGeometry(width, height, depth, widthSegments, heightSegments, depthSegments)</h6>
+  <pre>
+    width是x方向上的长度；
+    height是y方向上的长度；
+    depth是z方向上的长度；
+    后三个参数分别是在三个方向上的分段数，如widthSegments为3的话，代表x方向上水平分为三份。
+    一般情况下不需要分段的话，可以不设置后三个参数，后三个参数的缺省值为1。
+  </pre>
+  <h6>宽高长   X Y Z</h6>
+
+  <h6>分段  X Y Z 这个分段是对六个面进行分段，而不是对立方体的体素分段</h6>
+  <hr/>
+  <h6>平面 PlaneGeometry 其实是一个长方形</h6>
+  <h6>THREE.PlaneGeometry(width, height, widthSegments, heightSegments)</h6>
+  <pre>
+    width是x方向上的长度；height是y方向上的长度；后两个参数同样表示分段
+  </pre>
+  <hr/>
+  <h3>球体</h3>
+  <h6>
+    THREE.SphereGeometry(radius, segmentsWidth, segmentsHeight, phiStart, phiLength, thetaStart, thetaLength)
+  </h6>
+  <pre>
+      radius是半径；
+      segmentsWidth表示经度上的切片数；
+      segmentsHeight表示纬度上的切片数；
+      phiStart表示经度开始的弧度；
+      phiLength表示经度跨过的弧度；
+      thetaStart表示纬度开始的弧度；
+      thetaLength表示纬度跨过的弧度。
+  </pre>
+  <h6>分段</h6>
+  <pre>
+      segmentsWidth和segmentsHeight。
+      使用var sphere = new THREE.SphereGeometry(3, 8, 6)
+      可以创建一个半径为3，经度划分成8份，纬度划分成6份的球体
+      <img src="./SphereGeometry.png" alt="" width='400px'>
+  </pre>
+  <hr/>
+  <h6>圆形（CircleGeometry）可以创建圆形或者扇形</h6>
+  <h6>THREE.CircleGeometry(radius, segments, thetaStart, thetaLength)</h6>
+  <hr/>
+  <h6>圆柱体（CylinderGeometry）</h6>
+  <h6>
+    THREE.CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded)
+  </h6>
+  <pre>
+      radiusTop与radiusBottom分别是顶面和底面的半径，由此可知，当这两个参数设置为不同的值时，实际上创建的是一个圆台；
+      height是圆柱体的高度；
+      radiusSegments与heightSegments可类比球体中的分段；
+      openEnded是一个布尔值，表示是否没有顶面和底面，缺省值为false，表示有顶面和底面
+  </pre>
+  <hr/>
+  <h6>正四面体（TetrahedronGeometry）</h6>
+  <h6>THREE.TetrahedronGeometry(radius, detail)</h6>
+  <hr/>
+  <h6>正八面体（OctahedronGeometry）</h6>
+  <h6>THREE.OctahedronGeometry(radius, detail)</h6>
+  <hr/>
+  <h6>正二十面体（IcosahedronGeometry）</h6>
+  <h6>THREE.IcosahedronGeometry(radius, detail)</h6>
+  <pre>
+      radius是半径；
+      detail是细节层次（Level of Detail）的层数，对于大面片数模型，可以控制在视角靠近物体时，显示面片数多的精细模型，而在离物体较远时，显示面片数较少的粗略模型。这里我们不对detail多作展开，一般可以对这个值缺省
+  </pre>
+  <hr/>
+  <h6>圆环面（TorusGeometry）就是甜甜圈的形状</h6>
+  <h6>THREE.TorusGeometry(radius, tube, radialSegments, tubularSegments, arc)</h6>
+  <img src="./TorusGeometry.png" alt="" width='400px'>
+  <pre>
+      radius是圆环半径；
+      tube是管道半径；
+      radialSegments与tubularSegments分别是两个分段数，详见上图；
+      arc是圆环面的弧度，缺省值为Math.PI * 2。
+  </pre>
+  <hr/>
+  <h6>圆环结（TorusKnotGeometry）</h6>
+  <h6>
+    THREE.TorusKnotGeometry(radius, tube, radialSegments, tubularSegments, p, q, heightScale)
+  </h6>
+  <pre>
+      p和q是控制其样式的参数，一般可以缺省，如果需要详细了解，请学习圆环结的相关知识；
+      heightScale是在z轴方向上的缩放。
+  </pre>
+</body>
+</html>

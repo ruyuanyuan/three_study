@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Phong材质</title>
+</head>
+<body>
+  <h3>Phong材质（MeshPhongMaterial）是符合Phong光照模型的材质</h3>
+<pre>
+  Phong材质（MeshPhongMaterial）是符合Phong光照模型的材质。
+  和Lambert不同的是，Phong模型考虑了镜面反射的效果，因此对于金属、镜面的表现尤为适合。
+  漫反射部分和Lambert光照模型是相同的，
+
+  镜面反射部分的模型为：
+  <h6>Ispecular = Ks * Is * (cos(alpha)) ^ n</h6>
+
+  Ispecular是镜面反射的光强，
+  Ks是材质表面镜面反射系数，
+  Is是光源强度，
+  alpha是反射光与视线的夹角，
+  n是高光指数，越大则高光光斑越小。 
+
+  可以指定emissive和ambient值，
+  specular值指定镜面反射系数作说明。
+</pre>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自定义形状</title>
+  <script src='../../three.js'></script>
+</head>
+<body>
+  <canvas id='mycanvas' width='400' height='300'></canvas>
+  <h3>自定义形状使用的是Geometry类</h3>
+  <h6>THREE.Geometry()</h6>
+  <pre>
+      new THREE.Vector3(-1, 2, -1)创建一个矢量，作为顶点位置追加到geometry.vertices数组中。
+      而由new THREE.Face4(0, 1, 2, 3)创建一个四个顶点组成的面片，追加到geometry.faces数组中。
+      四个参数分别是四个顶点在geometry.vertices中的序号。
+      如果需要设置由三个顶点组成的面片，可以类似地使用THREE.Face3。
+  </pre>
+</body>
+</html>
+<script>
+  function init (){
+    var renderer= new THREE.WebGLRenderer({
+      canvas:document.getElementById('mycanvas')
+    })
+    var scene = new THREE.Scene()
+
+    // 照相机（Camera）
+    var camera = new THREE.PerspectiveCamera(90, 400 / 300, 1, 10)
+    camera.position.set(-2, 3, 5);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
+    
+    // 初始化几何形状
+    var geometry = new THREE.Geometry();
+
+    // 设置顶点位置
+    // 顶部4顶点
+    geometry.vertices.push(new THREE.Vector3(-1, 2, -1));
+    geometry.vertices.push(new THREE.Vector3(1, 2, -1));
+    geometry.vertices.push(new THREE.Vector3(1, 2, 1));
+    geometry.vertices.push(new THREE.Vector3(-1, 2, 1));
+    // 底部4顶点
+    geometry.vertices.push(new THREE.Vector3(-2, 0, -2));
+    geometry.vertices.push(new THREE.Vector3(2, 0, -2));
+    geometry.vertices.push(new THREE.Vector3(2, 0, 2));
+    geometry.vertices.push(new THREE.Vector3(-2, 0, 2));
+
+    // 设置顶点连接情况
+    // 顶面
+    geometry.faces.push(new THREE.Face4(0, 1, 2, 3));
+    // 底面
+    geometry.faces.push(new THREE.Face4(4, 5, 6, 7));
+    // 四个侧面
+    geometry.faces.push(new THREE.Face4(0, 1, 5, 4));
+    geometry.faces.push(new THREE.Face4(1, 2, 6, 5));
+    geometry.faces.push(new THREE.Face4(2, 3, 7, 6));
+    geometry.faces.push(new THREE.Face4(3, 0, 4, 7));
+
+
+    // 创建八面体
+    var cube = new THREE.Mesh(geometry,
+        new THREE.MeshBasicMaterial({
+            color: 0xff0000,
+            wireframe: true
+        })
+    );
+    scene.add(cube);
+
+    //渲染
+    renderer.render(scene, camera);
+
+  }
+  init()
+</script>

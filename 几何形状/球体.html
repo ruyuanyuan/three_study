@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>球体</title>
+    <script src="../three.js"></script>
+  </head>
+  <body>
+    <canvas id="myCanvas" width='400' height='300'></canvas>
+  </body>
+</html>
+<script>
+  function init() {
+    var renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('myCanvas')
+    })
+
+    var scene = new THREE.Scene()
+
+    // 照相机（Camera）
+    var camera = new THREE.PerspectiveCamera(30, 400 / 300, 1, 10);
+    camera.position.set(0, 0, 5)
+    camera.lookAt(new THREE.Vector3(0, 0, 0))
+    scene.add(camera)
+
+    // 创建长方形
+    var cube = new THREE.Mesh(
+      // new THREE.SphereGeometry(1, 8, 6),
+      new THREE.SphereGeometry(1, 18, 12),
+      // new THREE.SphereGeometry(1, 8, 6, 0, Math.PI,Math.PI / 6, 0.65*Math.PI ),
+      new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        wireframe: true
+      })
+    )
+    // cube.scale.set(0.8,0.6, 0.8)
+    cube.rotation.set(0.1,0.8, 0.8)
+    scene.add(cube)
+     
+    //渲染
+    renderer.render(scene, camera)
+  }
+  init()
+</script>

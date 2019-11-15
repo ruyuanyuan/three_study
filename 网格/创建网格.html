@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>创建网格</title>
+</head>
+<body>
+<h6>网格的创建非常简单，只要把几何形状与材质传入其构造函数</h6>
+<pre>
+    物体是网格（Mesh），它代表包含点、线、面的几何体，其构造函数是
+    <h6>Mesh(geometry, material)  图形 材质</h6>
+</pre>
+<pre>
+  var material = new THREE.MeshLambertMaterial({
+      color: 0xffff00
+  });
+  var geometry = new THREE.CubeGeometry(1, 2, 3);
+  var mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+</pre> 
+<h6>修改属性</h6> 
+<pre>
+    材质
+    除了在构造函数中指定材质，在网格被创建后，也能对材质进行修改：
+
+    var material = new THREE.MeshLambertMaterial({
+      color: 0xffff00
+    });
+    var geometry = new THREE.CubeGeometry(1, 2, 3);
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    
+    mesh.material = new THREE.MeshLambertMaterial({
+        color: 0xff0000
+  });
+</pre>
+<pre>
+    位置、缩放、旋转是物体三个常用属性。
+    由于THREE.Mesh基础自THREE.Object3D，因此包含scale、rotation、position三个属性。
+    它们都是THREE.Vector3实例，因此修改其值的方法是相同的，这里以位置为例
+
+    位置、缩放、旋转
+    位置、缩放、旋转是物体三个常用属性。
+    由于THREE.Mesh基础自THREE.Object3D，因此包含scale、rotation、position三个属性。
+
+    mesh.position.set(1.5, -0.5, 0); 或者
+    mesh.position = new THREE.Vector3(1.5, -0.5, 0);
+</pre>
+</body>
+</html>
