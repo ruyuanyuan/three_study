@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>点光源</title>
+  <script src="../three.js"></script>
+</head>
+<body>
+  <h2>点光源</h2>
+  <pre>
+    点光源是不计光源大小，可以看作一个点发出的光源。
+    点光源照到不同物体表面的亮度是线性递减的，因此，离点光源距离越远的物体会显得越暗。
+    点光源的构造函数是：
+    <h3>THREE.PointLight(hex, intensity, distance)</h3>
+    hex是光源十六进制的颜色值；
+    intensity是亮度，缺省值为1，表示100%亮度；
+    distance是光源最远照射到的距离，缺省值为0。
+  </pre>
+  <canvas id="mainCanvas" width="400px" height="300px" ></canvas>
+</body>
+</html>
+<script>
+  function init() {
+      // 渲染器（Renderer）
+      // 渲染器将和Canvas元素进行绑定
+      var renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById('mainCanvas')
+      })
+      // 设置为渲染器背景黑色
+      renderer.setClearColor(0x000000);
+  
+      //场景（Scene）
+      var scene = new THREE.Scene();
+  
+      // 照相机（Camera）
+      var camera = new THREE.PerspectiveCamera(45, 400 / 300, 1, 10)
+      camera.position.set(0, 5, 5);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+      scene.add(camera);
+      
+      // 光源
+      var light = new THREE.PointLight(0xffffff, 1, 100);
+      light.position.set(0, 1.5, 2);
+      scene.add(light);
+
+      var greenCube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+      new THREE.MeshLambertMaterial({color: 0x00ff00}));
+      greenCube.position.x = 2;
+      greenCube.rotation.y = Math.PI/6
+      scene.add(greenCube);
+
+      var whiteCube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+              new THREE.MeshLambertMaterial({color: 0xffffff}));
+      whiteCube.position.x = -2;
+      whiteCube.rotation.y = Math.PI/6
+      scene.add(whiteCube);
+  
+      //渲染
+      renderer.render(scene, camera);
+    }
+    init()
+  
+  </script>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>影子</title>
+  <script type="text/javascript" src="../three.js"></script>
+</head>
+<body>
+    <div id="canvas" width="400px" height="300px"></div>
+    <pre>
+        明暗是相对的，阴影的形成也就是因为比周围获得的光照更少。因此，要形成阴影，光源必不可少。
+        在Three.js中，能形成阴影的光源只有THREE.DirectionalLight与THREE.SpotLight；
+        而相对地，能表现阴影效果的材质只有THREE.LambertMaterial与THREE.PhongMaterial。
+        因而在设置光源和材质的时候，一定要注意这一点
+        <h3>renderer.shadowMapEnabled = true;</h3> 场景
+        <h3>xxx.castShadow = true;</h3> 光源以及所有要产生阴影的物体调用
+        <h3>xxx.receiveShadow = true;</h3> 接收阴影的物体调用
+    </pre>
+</body>
+</html>
+<script type="text/javascript">
+  var scene = null;
+  var camera = null;
+  var renderer = null;
+  
+  var cube = null;
+  var alpha = 0;
+  
+  function init() {
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(400, 300);
+      
+      var container = document.getElementById('canvas');
+      container.appendChild(renderer.domElement);
+      renderer.shadowMapEnabled = true;
+      renderer.shadowMapSoft = true;
+      
+      scene = new THREE.Scene();
+      
+      camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+      camera.position.set(5, 15, 25);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+      scene.add(camera);
+      
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8, 16, 16),
+              new THREE.MeshLambertMaterial({color: 0xcccccc}));
+      plane.rotation.x = -Math.PI / 2;
+      plane.position.y = -1;
+      plane.receiveShadow = true;
+      scene.add(plane);
+      
+      cube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+              new THREE.MeshLambertMaterial({color: 0x00ff00}));
+      cube.position.x = 2;
+      cube.castShadow = true;
+      scene.add(cube);
+      
+      var light = new THREE.SpotLight(0xffff00, 1, 100, Math.PI / 6, 25);
+      light.position.set(2, 5, 3);
+      light.target = cube;
+      light.castShadow = true;
+      
+      light.shadowCameraNear = 2;
+      light.shadowCameraFar = 10;
+      light.shadowCameraFov = 30;
+      light.shadowCameraVisible = true;
+      
+      light.shadowMapWidth = 1024;
+      light.shadowMapHeight = 1024;
+      light.shadowDarkness = 0.3;
+      
+      scene.add(light);
+      
+      // ambient light
+      var ambient = new THREE.AmbientLight(0x666666);
+      scene.add(ambient);
+      
+      requestAnimationFrame(draw);
+  }
+  
+  function draw() {
+      alpha += 0.01;
+      if (alpha > Math.PI * 2) {
+          alpha -= Math.PI * 2;
+      }
+      
+      cube.position.set(2 * Math.cos(alpha), 0, 2 * Math.sin(alpha));
+      
+      renderer.render(scene, camera);
+      
+      requestAnimationFrame(draw);
+  }
+  init()
+</script>

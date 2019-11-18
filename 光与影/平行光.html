@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>平行光</title>
+  <script src="../three.js"></script>
+</head>
+<body>
+  <h2>平行光</h2>
+  <pre>
+    太阳光常常被看作平行光，这是因为相对地球上物体的尺度而言，太阳离我们的距离足够远。
+    对于任意平行的平面，平行光照射的亮度都是相同的，而与平面所在位置无关。
+
+    平行光的构造函数是：
+    <h3>THREE.DirectionalLight(hex, intensity)</h3>
+    hex是光源十六进制的颜色值；
+    intensity是亮度，缺省值为1，表示100%亮度；
+  </pre>
+  <canvas id="mainCanvas" width="400px" height="300px" ></canvas>
+</body>
+</html>
+<script>
+  function init() {
+      // 渲染器（Renderer）
+      // 渲染器将和Canvas元素进行绑定
+      var renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById('mainCanvas')
+      })
+      // 设置为渲染器背景黑色
+      renderer.setClearColor(0x000000);
+  
+      //场景（Scene）
+      var scene = new THREE.Scene();
+  
+      // 照相机（Camera）
+      var camera = new THREE.PerspectiveCamera(45, 400 / 300, 1, 10)
+      camera.position.set(0, 5, 5);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+      scene.add(camera);
+      
+      // 光源
+      var light = new THREE.DirectionalLight();
+      light.position.set(2, 5, 3);
+      scene.add(light);
+
+      var greenCube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+      new THREE.MeshLambertMaterial({color: 0x00ff00}));
+      greenCube.position.x = 2;
+      greenCube.rotation.y = Math.PI/6
+      scene.add(greenCube);
+
+      var whiteCube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+              new THREE.MeshLambertMaterial({color: 0xffffff}));
+      whiteCube.position.x = -2;
+      whiteCube.rotation.y = Math.PI/6
+      scene.add(whiteCube);
+  
+      //渲染
+      renderer.render(scene, camera);
+    }
+    init()
+  
+  </script>
